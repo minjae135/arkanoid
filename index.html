@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Arkanoid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game" tabindex="0"></canvas>
+<div class="controls">
+    <button id="btn-mode" class="mode-btn" type="button">모드 변경</button>
+    <button id="btn-size" class="mode-btn" type="button">블록 크기</button>
+    <label class="slider-wrap" for="speed-slider" title="공 속도 조절">
+        <span>공 속도</span>
+        <input id="speed-slider" type="range" min="0.5" max="2.0" step="0.05" value="1.0" />
+        <output id="speed-value">100%</output>
+    </label>
+    <button id="btn-help" class="mode-btn" type="button">방법 보기</button>
+</div>
+<div id="mode-backdrop" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mode-title">
+        <h2 id="mode-title">모드 선택</h2>
+        <div class="mode-choices">
+            <button id="choice-normal" class="mode-choice" type="button" data-mode="NORMAL">기본</button>
+            <button id="choice-speed" class="mode-choice" type="button" data-mode="SPEED">스피드</button>
+            <button id="choice-hard" class="mode-choice" type="button" data-mode="HARD">하드</button>
+        </div>
+        <div class="modal-actions">
+            <button id="mode-cancel" class="secondary" type="button">닫기</button>
+        </div>
+    </div>
+</div>
+<div id="size-backdrop" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="size-title">
+        <h2 id="size-title">블록 크기</h2>
+        <div class="mode-choices">
+            <button id="size-small"  class="mode-choice" type="button" data-size="SMALL">작음</button>
+            <button id="size-normal" class="mode-choice" type="button" data-size="NORMAL">보통</button>
+            <button id="size-large"  class="mode-choice" type="button" data-size="LARGE">큼</button>
+            <button id="size-xlarge" class="mode-choice" type="button" data-size="XLARGE">매우 큼</button>
+        </div>
+        <div class="modal-actions">
+            <button id="size-cancel" class="secondary" type="button">닫기</button>
+        </div>
+    </div>
+</div>
+<!-- 방법 보기 모달 -->
+<div id="help-backdrop" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+        <h2 id="help-title">게임 방법</h2>
+        <div style="display:grid; gap:12px; color:#cfe7ff; font: 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, 'Noto Sans KR', sans-serif;">
+            <div>
+                <strong>목표</strong><br>
+                공으로 모든 블록을 부수세요. 공이 바닥으로 떨어지면 목숨이 줄어듭니다. 최고 점수에 도전해 보세요!
+            </div>
+            <div>
+                <strong>조작</strong><br>
+                - 마우스 또는 터치: 패들 이동<br>
+                - 키보드: ←/→ 또는 A/D<br>
+                - Space: 공 발사 / (아이템) 레이저 발사<br>
+                - P: 일시정지, R: 리셋
+            </div>
+            <div>
+                <strong>특수 블록</strong><br>
+                - 내구도 블록 (분홍색): 여러 번 맞춰야 파괴됩니다.<br>
+                - 폭발 블록 (주황색): 파괴 시 주변 블록도 함께 제거합니다.
+            </div>
+            <div>
+                <strong>아이템</strong><br>
+                - XL: 패들 길이 증가 (일정 시간)<br>
+                - +2: 패들에서 공 2개 즉시 추가<br>
+                - 3x: 현재 각 공에서 2개씩 분기 (총 3배)<br>
+                - MAX: 패들이 화면 끝까지 (일정 시간)<br>
+                - LASER: 패들에서 레이저 발사 (스페이스 바)
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button id="help-cancel" class="secondary" type="button">닫기</button>
+        </div>
+    </div>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
