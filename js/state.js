@@ -20,6 +20,9 @@ export let currentSize = 'NORMAL';
 // 공 속도 배율
 export let ballSpeedScale = 1.0;
 
+// 공 최대 개수
+export let maxBallCount = C.BALL.maxCountDefault;
+
 // 효과 상태
 export let shakeAmount = 0;
 export let bgOffset = 0;
@@ -60,6 +63,7 @@ export function setWasPausedBeforeModal(wasPaused) { wasPausedBeforeModal = wasP
 export function setCurrentMode(mode) { currentMode = mode; }
 export function setCurrentSize(size) { currentSize = size; }
 export function setBallSpeedScale(scale) { ballSpeedScale = scale; }
+export function setMaxBallCount(count) { maxBallCount = count; }
 export function setExtendTimer(time) { extendTimer = time; }
 export function setFullWidthTimer(time) { fullWidthTimer = time; }
 export function setLaserTimer(time) { laserTimer = time; }

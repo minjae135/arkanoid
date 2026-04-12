@@ -2,7 +2,7 @@
 import * as S from './state.js';
 import * as C from './constants.js';
 
-let canvas, resetGameCallback, setModeCallback, setSizeCallback, setSpeedCallback;
+let canvas, resetGameCallback, setModeCallback, setSizeCallback, setSpeedCallback, setMaxBallsCallback;
 
 // 모달 UI 요소
 const btnMode = document.getElementById('btn-mode');
@@ -24,9 +24,11 @@ const btnHelp = document.getElementById('btn-help');
 const helpBackdrop = document.getElementById('help-backdrop');
 const helpCancel = document.getElementById('help-cancel');
 
-// 속도 슬라이더
+// 슬라이더
 const speedSlider = document.getElementById('speed-slider');
 const speedValue  = document.getElementById('speed-value');
+const maxBallsSlider = document.getElementById('max-balls-slider');
+const maxBallsValue = document.getElementById('max-balls-value');
 
 function updateModalButtonsUI() {
     if (!choiceNormal || !choiceSpeed || !choiceHard) return;
@@ -78,6 +80,7 @@ export function initUI(canvasElement, callbacks) {
     setModeCallback = callbacks.onSetMode;
     setSizeCallback = callbacks.onSetSize;
     setSpeedCallback = callbacks.onSetSpeed;
+    setMaxBallsCallback = callbacks.onSetMaxBalls;
 
     // 모드 모달
     btnMode?.addEventListener('click', () => { openModal(backdrop, choiceNormal); updateModalButtonsUI(); });
@@ -109,6 +112,17 @@ export function initUI(canvasElement, callbacks) {
             const v = parseFloat(speedSlider.value || '1');
             setSpeedCallback(isNaN(v) ? 1 : v);
             if (speedValue) speedValue.textContent = `${Math.round(S.ballSpeedScale * 100)}%`;
+        });
+    }
+
+    // 공 최대 개수 슬라이더
+    if (maxBallsSlider) {
+        maxBallsSlider.value = String(S.maxBallCount);
+        if (maxBallsValue) maxBallsValue.textContent = String(S.maxBallCount);
+        maxBallsSlider.addEventListener('input', () => {
+            const v = parseInt(maxBallsSlider.value || '100');
+            setMaxBallsCallback(isNaN(v) ? 100 : v);
+            if (maxBallsValue) maxBallsValue.textContent = String(S.maxBallCount);
         });
     }
 

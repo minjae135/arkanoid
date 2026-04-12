@@ -14,7 +14,9 @@ export const PADDLE = {
 // 공 설정
 export const BALL = {
     radius: 8,
-    speed: 360
+    speed: 360,
+    maxCountDefault: 100,
+    maxCountLimit: 500
 };
 
 // 벽돌 설정

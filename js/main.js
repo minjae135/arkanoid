@@ -135,6 +135,10 @@ function setSpeed(scale) {
     }
 }
 
+function setMaxBalls(count) {
+    S.setMaxBallCount(count);
+}
+
 function reflectBallFromPaddle(b) {
     const hitPos = (b.x - (S.paddle.x + S.paddle.width / 2)) / (S.paddle.width / 2);
     const maxBounce = Math.PI / 3;
@@ -183,7 +187,7 @@ function applyItem(type) {
         case C.ITEM_TYPES.FULLWIDTH: S.setFullWidthTimer(8); break;
         case C.ITEM_TYPES.LASER: S.setLaserTimer(10); break;
         case C.ITEM_TYPES.BIGBALL: {
-            const maxBalls = 200;
+            const maxBalls = S.maxBallCount;
             let slots = Math.max(0, maxBalls - S.balls.length);
             if (slots <= 0) break;
             const originals = S.balls.slice();
@@ -219,7 +223,7 @@ function applyItem(type) {
             break;
         }
             case C.ITEM_TYPES.MULTI2: {
-                const maxBalls = 200;
+                const maxBalls = S.maxBallCount;
                 let slots = Math.max(0, maxBalls - S.balls.length);
                 if (slots <= 0) break;
                 const angles = [-Math.PI / 6, -Math.PI / 3.5];
@@ -533,7 +537,7 @@ window.addEventListener('resize', setupCanvasResolution);
 // --- 최종 초기화 ---
 S.loadHighScore();
 setupCanvasResolution();
-initUI(canvas, { onReset: resetGame, onSetMode: setMode, onSetSize: setSize, onSetSpeed: setSpeed });
+initUI(canvas, { onReset: resetGame, onSetMode: setMode, onSetSize: setSize, onSetSpeed: setSpeed, onSetMaxBalls: setMaxBalls });
 resetGame();
 canvas.focus();
 requestAnimationFrame(loop);
