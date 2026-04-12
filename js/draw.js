@@ -154,7 +154,7 @@ export function drawItems(ctx) {
         const color = ({
             [C.ITEM_TYPES.EXTEND]: NEON_CYAN,
             [C.ITEM_TYPES.MULTI2]: '#4ea8de',
-            [C.ITEM_TYPES.BIGBALL]: NEON_YELLOW,
+            [C.ITEM_TYPES.TRIPLE]: NEON_YELLOW,
             [C.ITEM_TYPES.FULLWIDTH]: NEON_MAGENTA,
             [C.ITEM_TYPES.LASER]: '#ff3333'
         })[it.type] || '#999';
@@ -173,7 +173,7 @@ export function drawItems(ctx) {
             {
                 [C.ITEM_TYPES.EXTEND]: 'XL',
                 [C.ITEM_TYPES.MULTI2]: '+2',
-                [C.ITEM_TYPES.BIGBALL]: '3X',
+                [C.ITEM_TYPES.TRIPLE]: '3X',
                 [C.ITEM_TYPES.FULLWIDTH]: 'MAX',
                 [C.ITEM_TYPES.LASER]: 'LSR'
             })[it.type] || '?',

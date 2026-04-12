@@ -49,7 +49,7 @@ export const SIZE_PRESET = {
 export const ITEM_TYPES = {
     EXTEND: 'EXTEND',
     MULTI2: 'MULTI2',
-    BIGBALL: 'BIGBALL',
+    TRIPLE: 'TRIPLE',
     FULLWIDTH: 'FULLWIDTH',
     LASER: 'LASER' // 레이저 아이템 추가
 };

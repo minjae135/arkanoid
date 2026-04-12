@@ -167,7 +167,7 @@ function spawnItemAt(brick) {
     let weighted = [
         { type: C.ITEM_TYPES.EXTEND, w: wExtend },
         { type: C.ITEM_TYPES.MULTI2, w: 35 },
-        { type: C.ITEM_TYPES.BIGBALL, w: 23 },
+        { type: C.ITEM_TYPES.TRIPLE, w: 23 },
         { type: C.ITEM_TYPES.LASER, w: 15 },
     ];
     if (S.currentMode !== C.MODES.HARD) {
@@ -186,7 +186,7 @@ function applyItem(type) {
         case C.ITEM_TYPES.EXTEND: S.setExtendTimer(12); break;
         case C.ITEM_TYPES.FULLWIDTH: S.setFullWidthTimer(8); break;
         case C.ITEM_TYPES.LASER: S.setLaserTimer(10); break;
-        case C.ITEM_TYPES.BIGBALL: {
+        case C.ITEM_TYPES.TRIPLE: {
             const maxBalls = S.maxBallCount;
             let slots = Math.max(0, maxBalls - S.balls.length);
             if (slots <= 0) break;
