@@ -512,21 +512,25 @@ function loop(ts) {
 
 // --- 이벤트 리스너 ---
 const handleCanvasInteraction = (e) => {
-    e.preventDefault();
-    initAudio(); // 첫 터치/클릭 시 오디오 활성화
+    initAudio(); 
 
-    if (!S.running) {
-        // 게임 오버나 클리어 상태일 때 화면 터치 시 리셋 고려 가능 (여기서는 Space/R 유지)
-        return;
-    }
+    if (S.uiModalOpen) return;
 
-    if (S.paused && !S.uiModalOpen) {
+    // 터치/클릭 지점으로 패들 즉시 이동
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    mouseX = (clientX - rect.left) / rect.width * C.WIDTH;
+    mouseSnapLock = false;
+
+    if (!S.running) return;
+
+    if (S.paused) {
         S.setPaused(false);
         return;
     }
 
     const isBallStuck = S.balls.every(b => b.stuck);
-    if (isBallStuck && !S.uiModalOpen) {
+    if (isBallStuck) {
         const b0 = S.balls[0];
         const ang = U.randRange(-Math.PI / 4, Math.PI / 4);
         b0.stuck = false;
@@ -536,8 +540,14 @@ const handleCanvasInteraction = (e) => {
     }
 };
 
-canvas.addEventListener('mousedown', handleCanvasInteraction);
-canvas.addEventListener('touchstart', handleCanvasInteraction, { passive: false });
+canvas.addEventListener('mousedown', (e) => {
+    handleCanvasInteraction(e);
+});
+
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // 브라우저 동작 방지
+    handleCanvasInteraction(e);
+}, { passive: false });
 
 window.addEventListener('keydown', (e) => {
     if (['ArrowLeft', 'ArrowRight', 'Space', 'KeyA', 'KeyD', 'KeyP', 'KeyR'].includes(e.code)) e.preventDefault();

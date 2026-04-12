@@ -14,41 +14,49 @@
 html, body {
     height: 100%;
     margin: 0;
+    overflow: hidden;
+    position: fixed; /* 전체 레이아웃 고정 */
+    width: 100%;
+    touch-action: none; /* 브라우저 기본 동작 차단 */
 }
 
 body {
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background: radial-gradient(circle at 50% 30%, #1c1f3b 0%, #0d0f16 70%, #05060a 100%);
     font-family: 'Pretendard Variable', 'Pretendard', system-ui, -apple-system, sans-serif;
     color: #e6eaf2;
-    overflow: hidden;
 }
 
 #game {
-    width: min(92vw, 900px);
+    width: min(95vw, 900px);
+    height: auto;
     aspect-ratio: 4 / 3;
-    max-height: 70vh; /* 모바일에서 컨트롤 영역 확보를 위해 높이 축소 */
+    max-height: 70vh;
     border: 2px solid var(--neon-cyan);
     border-radius: 12px;
     background: #000;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     box-shadow: 0 0 20px rgba(0, 243, 255, 0.2), inset 0 0 30px rgba(0, 180, 255, 0.1);
-    touch-action: none; /* 브라우저 기본 터치 동작(스크롤, 확대) 방지 */
+    touch-action: none;
     user-select: none;
     -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 /* 하단 컨트롤 */
 .controls {
-    margin-top: 16px;
+    margin-top: 12px;
     display: flex;
     gap: 8px;
-    flex-wrap: wrap; /* 좁은 화면에서 줄바꿈 허용 */
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    padding: 0 10px;
+    padding: 0 16px;
+    max-width: 900px;
 }
 
 .mode-btn {
