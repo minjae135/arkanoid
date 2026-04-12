@@ -511,18 +511,23 @@ function loop(ts) {
 }
 
 // --- 이벤트 리스너 ---
-const handleCanvasInteraction = (e) => {
-    initAudio(); 
-
-    if (S.uiModalOpen) return;
-
-    // 터치/클릭 지점으로 패들 즉시 이동
+const updatePointerPosition = (e) => {
     const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    mouseX = (clientX - rect.left) / rect.width * C.WIDTH;
-    mouseSnapLock = false;
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    if (clientX !== undefined) {
+        mouseX = (clientX - rect.left) / rect.width * C.WIDTH;
+        mouseSnapLock = false;
+    }
+};
 
-    if (!S.running) return;
+const handlePointerDown = (e) => {
+    // 터치 시 화면이 출렁이는 것 방지
+    if (e.cancelable) e.preventDefault();
+    
+    initAudio(); 
+    updatePointerPosition(e);
+
+    if (!S.running || S.uiModalOpen) return;
 
     if (S.paused) {
         S.setPaused(false);
@@ -540,14 +545,14 @@ const handleCanvasInteraction = (e) => {
     }
 };
 
-canvas.addEventListener('mousedown', (e) => {
-    handleCanvasInteraction(e);
-});
+// Pointer Events 사용 (마우스, 터치, 펜 통합)
+canvas.addEventListener('pointerdown', handlePointerDown, { passive: false });
+canvas.addEventListener('pointermove', (e) => {
+    updatePointerPosition(e);
+}, { passive: true });
 
-canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // 브라우저 동작 방지
-    handleCanvasInteraction(e);
-}, { passive: false });
+// 기존 touch/mouse 이벤트가 pointer 이벤트와 충돌하지 않도록 방지
+canvas.style.touchAction = 'none';
 
 window.addEventListener('keydown', (e) => {
     if (['ArrowLeft', 'ArrowRight', 'Space', 'KeyA', 'KeyD', 'KeyP', 'KeyR'].includes(e.code)) e.preventDefault();
@@ -558,18 +563,6 @@ window.addEventListener('keyup', (e) => {
     keys.delete(e.code);
     if (['ArrowLeft', 'ArrowRight', 'KeyA', 'KeyD'].includes(e.code)) mouseSnapLock = false;
 });
-canvas.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouseX = (e.clientX - rect.left) / rect.width * C.WIDTH;
-    mouseSnapLock = false;
-});
-canvas.addEventListener('touchmove', (e) => {
-    if (e.touches.length > 0) {
-        const rect = canvas.getBoundingClientRect();
-        mouseX = (e.touches[0].clientX - rect.left) / rect.width * C.WIDTH;
-        mouseSnapLock = false;
-    }
-}, { passive: false }); // passive: false로 설정하여 스크롤 방지 효과 확실히 함
 window.addEventListener('resize', setupCanvasResolution);
 
 // --- 최종 초기화 ---
