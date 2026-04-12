@@ -28,22 +28,27 @@ body {
 #game {
     width: min(92vw, 900px);
     aspect-ratio: 4 / 3;
-    max-height: 85vh;
+    max-height: 70vh; /* 모바일에서 컨트롤 영역 확보를 위해 높이 축소 */
     border: 2px solid var(--neon-cyan);
     border-radius: 12px;
     background: #000;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     box-shadow: 0 0 20px rgba(0, 243, 255, 0.2), inset 0 0 30px rgba(0, 180, 255, 0.1);
+    touch-action: none; /* 브라우저 기본 터치 동작(스크롤, 확대) 방지 */
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 /* 하단 컨트롤 */
 .controls {
     margin-top: 16px;
     display: flex;
-    gap: 12px;
+    gap: 8px;
+    flex-wrap: wrap; /* 좁은 화면에서 줄바꿈 허용 */
     align-items: center;
     justify-content: center;
+    padding: 0 10px;
 }
 
 .mode-btn {
@@ -51,14 +56,15 @@ body {
     border: 1px solid var(--border-color);
     background: rgba(20, 26, 42, 0.9);
     color: #e6eaf2;
-    padding: 10px 18px;
+    padding: 12px 16px; /* 터치 영역 확대 */
     border-radius: 10px;
-    font: 700 14px 'Orbitron', sans-serif;
+    font: 700 13px 'Orbitron', sans-serif;
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .mode-btn:hover {

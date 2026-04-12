@@ -511,6 +511,34 @@ function loop(ts) {
 }
 
 // --- 이벤트 리스너 ---
+const handleCanvasInteraction = (e) => {
+    e.preventDefault();
+    initAudio(); // 첫 터치/클릭 시 오디오 활성화
+
+    if (!S.running) {
+        // 게임 오버나 클리어 상태일 때 화면 터치 시 리셋 고려 가능 (여기서는 Space/R 유지)
+        return;
+    }
+
+    if (S.paused && !S.uiModalOpen) {
+        S.setPaused(false);
+        return;
+    }
+
+    const isBallStuck = S.balls.every(b => b.stuck);
+    if (isBallStuck && !S.uiModalOpen) {
+        const b0 = S.balls[0];
+        const ang = U.randRange(-Math.PI / 4, Math.PI / 4);
+        b0.stuck = false;
+        b0.vx = Math.cos(ang) * b0.speed;
+        b0.vy = -Math.sin(Math.PI / 2 - ang) * b0.speed;
+        S.setShakeAmount(2);
+    }
+};
+
+canvas.addEventListener('mousedown', handleCanvasInteraction);
+canvas.addEventListener('touchstart', handleCanvasInteraction, { passive: false });
+
 window.addEventListener('keydown', (e) => {
     if (['ArrowLeft', 'ArrowRight', 'Space', 'KeyA', 'KeyD', 'KeyP', 'KeyR'].includes(e.code)) e.preventDefault();
     keys.add(e.code);
@@ -531,7 +559,7 @@ canvas.addEventListener('touchmove', (e) => {
         mouseX = (e.touches[0].clientX - rect.left) / rect.width * C.WIDTH;
         mouseSnapLock = false;
     }
-}, { passive: true });
+}, { passive: false }); // passive: false로 설정하여 스크롤 방지 효과 확실히 함
 window.addEventListener('resize', setupCanvasResolution);
 
 // --- 최종 초기화 ---
