@@ -44,7 +44,7 @@ export function drawBackground(ctx) {
 export function drawHUD(ctx) {
     ctx.shadowBlur = 0;
     ctx.fillStyle = '#fff';
-    ctx.font = '700 16px "Orbitron", sans-serif';
+    ctx.font = '700 15px "Orbitron", sans-serif';
     ctx.textBaseline = 'middle';
 
     // Glow 효과를 위해 두 번 그리기
@@ -59,28 +59,29 @@ export function drawHUD(ctx) {
         ctx.fillText(text, x, y);
     };
 
-    drawTextWithGlow(`SCORE: ${S.score}`, 20, 24, 'left');
+    // 상단 행: 점수, 모드, 최고기록
+    drawTextWithGlow(`SCORE: ${S.score}`, 20, 16, 'left');
     
-    // 콤보 및 배율 표시 추가
+    const modeLabel = S.currentMode === C.MODES.SPEED ? 'SPEED' : S.currentMode === C.MODES.HARD ? 'HARD' : 'NORMAL';
+    drawTextWithGlow(`MODE: ${modeLabel}`, C.WIDTH / 2, 16, 'center', NEON_MAGENTA);
+    
+    drawTextWithGlow(`HIGH: ${S.highScore}`, C.WIDTH - 20, 16, 'right');
+
+    // 하단 행: 콤보, 멀티볼, 목숨
     if (S.combo > 1) {
-        const comboScale = 1 + Math.min(S.combo * 0.05, 0.5);
+        const comboScale = 1 + Math.min(S.combo * 0.05, 0.3);
         ctx.save();
-        ctx.translate(140, 24);
+        ctx.translate(20, 35);
         ctx.scale(comboScale, comboScale);
         drawTextWithGlow(`${S.combo} COMBO`, 0, 0, 'left', NEON_YELLOW);
         ctx.restore();
     }
 
-    const modeLabel = S.currentMode === C.MODES.SPEED ? 'SPEED' : S.currentMode === C.MODES.HARD ? 'HARD' : 'NORMAL';
-    drawTextWithGlow(`MODE: ${modeLabel}`, C.WIDTH / 2 - 60, 24, 'center', NEON_MAGENTA);
-    
-    // 멀티볼 배율 표시
     if (S.balls.length > 1) {
-        drawTextWithGlow(`x${S.balls.length} BALLS`, C.WIDTH / 2 + 60, 40, 'center', NEON_CYAN);
+        drawTextWithGlow(`x${S.balls.length} BALLS`, C.WIDTH / 2, 35, 'center', NEON_CYAN);
     }
 
-    drawTextWithGlow(`LIVES: ${S.lives}`, C.WIDTH / 2 + 60, 24, 'center', NEON_YELLOW);
-    drawTextWithGlow(`HIGH: ${S.highScore}`, C.WIDTH - 20, 24, 'right');
+    drawTextWithGlow(`LIVES: ${S.lives}`, C.WIDTH - 20, 35, 'right', NEON_YELLOW);
 }
 
 export function drawPaddle(ctx) {
