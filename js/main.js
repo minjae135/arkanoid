@@ -573,7 +573,6 @@ window.addEventListener('keydown', (e) => {
 });
 window.addEventListener('keyup', (e) => {
     keys.delete(e.code);
-    if (['ArrowLeft', 'ArrowRight', 'KeyA', 'KeyD'].includes(e.code)) mouseSnapLock = false;
 });
 window.addEventListener('resize', setupCanvasResolution);
 
