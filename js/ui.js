@@ -5,6 +5,7 @@ import * as C from './constants.js';
 let canvas, resetGameCallback, setModeCallback, setSizeCallback, setSpeedCallback, setMaxBallsCallback;
 
 // 모달 UI 요소
+const btnReset = document.getElementById('btn-reset');
 const btnMode = document.getElementById('btn-mode');
 const backdrop = document.getElementById('mode-backdrop');
 const btnCancel = document.getElementById('mode-cancel');
@@ -81,6 +82,11 @@ export function initUI(canvasElement, callbacks) {
     setSizeCallback = callbacks.onSetSize;
     setSpeedCallback = callbacks.onSetSpeed;
     setMaxBallsCallback = callbacks.onSetMaxBalls;
+
+    // 리셋 버튼
+    btnReset?.addEventListener('click', () => {
+        resetGameCallback();
+    });
 
     // 모드 모달
     btnMode?.addEventListener('click', () => { openModal(backdrop, choiceNormal); updateModalButtonsUI(); });

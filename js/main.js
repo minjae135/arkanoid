@@ -187,8 +187,7 @@ function applyItem(type) {
         case C.ITEM_TYPES.FULLWIDTH: S.setFullWidthTimer(8); break;
         case C.ITEM_TYPES.LASER: S.setLaserTimer(10); break;
         case C.ITEM_TYPES.TRIPLE: {
-            const maxBalls = S.maxBallCount;
-            let slots = Math.max(0, maxBalls - S.balls.length);
+            let slots = Math.max(0, S.maxBallCount - S.balls.length);
             if (slots <= 0) break;
             const originals = S.balls.slice();
             for (const src of originals) {
@@ -223,8 +222,7 @@ function applyItem(type) {
             break;
         }
             case C.ITEM_TYPES.MULTI2: {
-                const maxBalls = S.maxBallCount;
-                let slots = Math.max(0, maxBalls - S.balls.length);
+                let slots = Math.max(0, S.maxBallCount - S.balls.length);
                 if (slots <= 0) break;
                 const angles = [-Math.PI / 6, -Math.PI / 3.5];
                 for (let i = 0; i < angles.length && slots > 0; i++, slots--) {
@@ -485,17 +483,17 @@ function render() {
     D.drawLasers(ctx);
 
     if (S.paused && !S.uiModalOpen) {
-        D.drawOverlay(ctx, 'PAUSED', 'PRESS P TO CONTINUE  •  R TO RESET');
+        D.drawOverlay(ctx, 'PAUSED', 'TAP OR P TO CONTINUE  •  R TO RESET');
     } else if (!S.running) {
         if (S.won) {
-            D.drawOverlay(ctx, 'CLEAR!', `SCORE: ${S.score}  •  R TO RESET`);
+            D.drawOverlay(ctx, 'CLEAR!', `SCORE: ${S.score}  •  TAP OR R TO RESET`);
         } else if (S.lives <= 0) {
-            D.drawOverlay(ctx, 'GAME OVER', `SCORE: ${S.score}  •  R TO RESET`);
+            D.drawOverlay(ctx, 'GAME OVER', `SCORE: ${S.score}  •  TAP OR R TO RESET`);
         } else {
-            D.drawOverlay(ctx, 'STOPPED', 'R TO RESET');
+            D.drawOverlay(ctx, 'STOPPED', 'TAP OR R TO RESET');
         }
     } else if (S.balls.every(b => b.stuck) && !S.uiModalOpen) {
-        D.drawOverlay(ctx, 'READY?', 'SPACE TO LAUNCH');
+        D.drawOverlay(ctx, 'READY?', 'TAP OR SPACE TO LAUNCH');
     }
 
     ctx.restore();
@@ -527,7 +525,13 @@ const handlePointerDown = (e) => {
     initAudio(); 
     updatePointerPosition(e);
 
-    if (!S.running || S.uiModalOpen) return;
+    if (S.uiModalOpen) return;
+
+    // 게임이 실행 중이 아닐 때 (게임 오버, 클리어 등) 화면 터치 시 리셋
+    if (!S.running) {
+        resetGame();
+        return;
+    }
 
     if (S.paused) {
         S.setPaused(false);

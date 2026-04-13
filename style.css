@@ -1,4 +1,7 @@
 /* style.css */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
+
 :root {
     color-scheme: dark;
     --neon-cyan: #00f3ff;
@@ -39,7 +42,6 @@ body {
     border-radius: 12px;
     background: #000;
     image-rendering: pixelated;
-    image-rendering: crisp-edges;
     box-shadow: 0 0 20px rgba(0, 243, 255, 0.2), inset 0 0 30px rgba(0, 180, 255, 0.1);
     touch-action: none;
     user-select: none;

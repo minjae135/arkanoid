@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <title>Arkanoid</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <canvas id="game" tabindex="0"></canvas>
 <div class="controls">
+    <button id="btn-reset" class="mode-btn" type="button">다시 시작</button>
     <button id="btn-mode" class="mode-btn" type="button">모드 변경</button>
     <button id="btn-size" class="mode-btn" type="button">블록 크기</button>
     <label class="slider-wrap" for="speed-slider" title="공 속도 조절">
