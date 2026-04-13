@@ -1,24 +1,26 @@
 // src/sound.ts
-let audioCtx;
+
+let audioCtx: AudioContext | undefined;
 let isInitialized = false;
+
 // 오디오 컨텍스트 초기화 (사용자 상호작용 시 호출되어야 함)
-export function initAudio() {
-    if (isInitialized)
-        return;
+export function initAudio(): void {
+    if (isInitialized) return;
     try {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        const AudioContextClass = (window as any).AudioContext || (window as any).webkitAudioContext;
         audioCtx = new AudioContextClass();
         isInitialized = true;
-    }
-    catch (e) {
+    } catch (e) {
         console.error("Web Audio API is not supported in this browser");
     }
 }
+
 // 지정된 이름의 사운드를 생성하고 재생합니다.
-export function playSound(soundName) {
-    if (!isInitialized || !audioCtx)
-        return;
-    let oscillator, gainNode;
+export function playSound(soundName: 'bounce' | 'break' | 'item' | 'laser'): void {
+    if (!isInitialized || !audioCtx) return;
+
+    let oscillator: OscillatorNode, gainNode: GainNode;
+
     switch (soundName) {
         case 'bounce':
             oscillator = audioCtx.createOscillator();
@@ -32,6 +34,7 @@ export function playSound(soundName) {
             oscillator.start(audioCtx.currentTime);
             oscillator.stop(audioCtx.currentTime + 0.2);
             break;
+
         case 'break':
             const bufferSize = audioCtx.sampleRate * 0.1;
             const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
@@ -49,6 +52,7 @@ export function playSound(soundName) {
             noise.start(audioCtx.currentTime);
             noise.stop(audioCtx.currentTime + 0.1);
             break;
+
         case 'item':
             oscillator = audioCtx.createOscillator();
             gainNode = audioCtx.createGain();
@@ -62,6 +66,7 @@ export function playSound(soundName) {
             oscillator.start(audioCtx.currentTime);
             oscillator.stop(audioCtx.currentTime + 0.15);
             break;
+
         case 'laser':
             oscillator = audioCtx.createOscillator();
             gainNode = audioCtx.createGain();
@@ -77,4 +82,3 @@ export function playSound(soundName) {
             break;
     }
 }
-//# sourceMappingURL=sound.js.map
