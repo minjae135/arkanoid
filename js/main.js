@@ -546,6 +546,14 @@ const handlePointerDown = (e) => {
         b0.vx = Math.cos(ang) * b0.speed;
         b0.vy = -Math.sin(Math.PI / 2 - ang) * b0.speed;
         S.setShakeAmount(2);
+    } else if (S.laserTimer >= 0 && laserCooldown === 0) {
+        // 모바일 터치 시 레이저 발사 로직 추가
+        laserCooldown = 0.3;
+        const paddleCenter = S.paddle.x + S.paddle.width / 2;
+        S.lasers.push({ x: paddleCenter - 40, y: S.paddle.y, w: 4, h: 12, vy: -600 })
+        S.lasers.push({ x: paddleCenter + 40, y: S.paddle.y, w: 4, h: 12, vy: -600 });
+        playSound('laser');
+        S.setShakeAmount(1);
     }
 };
 
