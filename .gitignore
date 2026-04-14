@@ -1,0 +1,8 @@
+# 빌드 결과물 중 지도 파일
+js/*.map
+
+# 의존성 패키지
+node_modules/
+
+# IDE 설정 파일
+.idea/
