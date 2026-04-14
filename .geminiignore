@@ -1,2 +1,8 @@
+# 패키지 설치 루트. package.json이 있기에 필요 없음
 node_modules/
+
+# WebStorm 설정 파일이기에 필요 없음
 .idea/
+
+# 소스 지도 파일
+js/*.map
