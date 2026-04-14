@@ -91,12 +91,10 @@ export const baseBall = {radius: C.BALL.radius, speed: C.BALL.speed};
 export let balls: Ball[] = [];
 export let bricks: Brick[] = [];
 export let items: Item[] = [];
-export let lasers: Laser[] = [];
 
 // 파워업 타이머
 export let extendTimer = 0;
 export let fullWidthTimer = 0;
-export let laserTimer = 0;
 
 // --- 상태 변경 함수 ---
 
@@ -114,7 +112,6 @@ export function setBallSpeedScale(scale: number) { ballSpeedScale = scale; }
 export function setMaxBallCount(count: number) { maxBallCount = count; }
 export function setExtendTimer(time: number) { extendTimer = time; }
 export function setFullWidthTimer(time: number) { fullWidthTimer = time; }
-export function setLaserTimer(time: number) { laserTimer = time; }
 export function setShakeAmount(amount: number) { shakeAmount = amount; }
 export function setBgOffset(offset: number) { bgOffset = offset; }
 export function setCombo(c: number) { combo = c; }
@@ -123,7 +120,6 @@ export function setComboTimer(t: number) { comboTimer = t; }
 export function resetItems() { items.length = 0; }
 export function resetBalls(newBalls: Ball[]) { balls = newBalls; }
 export function resetBricks(newBricks: Brick[]) { bricks = newBricks; }
-export function resetLasers() { lasers.length = 0; }
 
 // --- 최고 점수 관리 ---
 export function loadHighScore() {

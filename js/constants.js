@@ -40,8 +40,7 @@ export const ITEM_TYPES = {
     EXTEND: 'EXTEND',
     MULTI2: 'MULTI2',
     TRIPLE: 'TRIPLE',
-    FULLWIDTH: 'FULLWIDTH',
-    LASER: 'LASER'
+    FULLWIDTH: 'FULLWIDTH'
 };
 export const BLOCK_TYPES = {
     NORMAL: 'NORMAL', // 일반

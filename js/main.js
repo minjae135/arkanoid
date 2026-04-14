@@ -42,14 +42,6 @@ function handlePointerDown(e) {
         b0.vy = -Math.sin(Math.PI / 2 - ang) * b0.speed;
         S.setShakeAmount(2);
     }
-    else if (S.laserTimer > 0 && M.laserCooldown === 0) {
-        M.setLaserCooldown(0.3);
-        const paddleCenter = S.paddle.x + S.paddle.width / 2;
-        S.lasers.push({ x: paddleCenter - 40, y: S.paddle.y, w: 4, h: 12, vy: -600 });
-        S.lasers.push({ x: paddleCenter + 40, y: S.paddle.y, w: 4, h: 12, vy: -600 });
-        playSound('laser');
-        S.setShakeAmount(1);
-    }
 }
 function update(dt) {
     if (S.uiModalOpen)
@@ -70,10 +62,6 @@ function update(dt) {
         S.setExtendTimer(Math.max(0, S.extendTimer - dt));
     if (S.fullWidthTimer > 0)
         S.setFullWidthTimer(Math.max(0, S.fullWidthTimer - dt));
-    if (S.laserTimer > 0)
-        S.setLaserTimer(Math.max(0, S.laserTimer - dt));
-    if (M.laserCooldown > 0)
-        M.setLaserCooldown(Math.max(0, M.laserCooldown - dt));
     if (S.comboTimer > 0) {
         S.setComboTimer(Math.max(0, S.comboTimer - dt));
         if (S.comboTimer === 0)
@@ -106,14 +94,6 @@ function update(dt) {
             b0.vy = -Math.sin(Math.PI / 2 - ang) * b0.speed;
             S.setShakeAmount(2);
         }
-        else if (S.laserTimer > 0 && M.laserCooldown === 0) {
-            M.setLaserCooldown(0.3);
-            const paddleCenter = S.paddle.x + S.paddle.width / 2;
-            S.lasers.push({ x: paddleCenter - 40, y: S.paddle.y, w: 4, h: 12, vy: -600 });
-            S.lasers.push({ x: paddleCenter + 40, y: S.paddle.y, w: 4, h: 12, vy: -600 });
-            playSound('laser');
-            S.setShakeAmount(1);
-        }
         I.keys.delete('Space');
     }
     if (isBallStuck) {
@@ -139,22 +119,6 @@ function update(dt) {
         }
         if (it.y > C.HEIGHT + 40)
             S.items.splice(i, 1);
-    }
-    // 레이저 업데이트
-    for (let i = S.lasers.length - 1; i >= 0; i--) {
-        const l = S.lasers[i];
-        l.y += l.vy * dt;
-        if (l.y < 0) {
-            S.lasers.splice(i, 1);
-            continue;
-        }
-        for (const brick of S.bricks) {
-            if (brick.alive && U.circleRectCollision(l.x, l.y, l.w, brick.x, brick.y, brick.w, brick.h)) {
-                P.handleBrickCollision(brick);
-                S.lasers.splice(i, 1);
-                break;
-            }
-        }
     }
     // 공 업데이트 및 충돌
     for (const b of S.balls) {
@@ -243,7 +207,6 @@ function update(dt) {
             S.setExtendTimer(Math.max(0, S.extendTimer - 1.5));
             S.setFullWidthTimer(Math.max(0, S.fullWidthTimer - 1.5));
             S.resetItems();
-            S.resetLasers();
             M.resetBalls(true);
         }
     }
@@ -259,7 +222,6 @@ function render() {
     D.drawPaddle(ctx);
     D.drawBalls(ctx);
     D.drawItems(ctx);
-    D.drawLasers(ctx);
     if (S.paused && !S.uiModalOpen) {
         D.drawOverlay(ctx, 'PAUSED', 'TAP OR P TO CONTINUE  •  R TO RESET');
     }

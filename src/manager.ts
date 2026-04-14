@@ -3,9 +3,6 @@ import * as C from './constants.js';
 import * as S from './state.js';
 import * as U from './utils.js';
 
-export let laserCooldown = 0;
-export function setLaserCooldown(val: number) { laserCooldown = val; }
-
 export function buildLevel(): void {
     const newBricks: S.Brick[] = [];
     const preset = C.SIZE_PRESET[S.currentSize] || C.SIZE_PRESET.NORMAL;
@@ -78,12 +75,10 @@ export function resetGame(): void {
     S.setRunning(true);
     S.setExtendTimer(0);
     S.setFullWidthTimer(0);
-    S.setLaserTimer(0);
     S.setShakeAmount(0);
     S.setCombo(0);
     S.setComboTimer(0);
     S.resetItems();
-    S.resetLasers();
     buildLevel();
     S.paddle.x = C.WIDTH / 2 - C.PADDLE.width / 2;
     S.paddle.width = C.PADDLE.width;
@@ -155,7 +150,6 @@ export function spawnItemAt(brick: S.Brick): void {
             { type: C.ITEM_TYPES.EXTEND, w: wExtend },
             { type: C.ITEM_TYPES.MULTI2, w: 35 },
             { type: C.ITEM_TYPES.TRIPLE, w: 23 },
-            { type: C.ITEM_TYPES.LASER, w: 15 },
             { type: C.ITEM_TYPES.FULLWIDTH, w: 2 },
         ];
     }
@@ -171,7 +165,6 @@ export function applyItem(type: C.ItemType): void {
     switch (type) {
         case C.ITEM_TYPES.EXTEND: S.setExtendTimer(12); break;
         case C.ITEM_TYPES.FULLWIDTH: S.setFullWidthTimer(8); break;
-        case C.ITEM_TYPES.LASER: S.setLaserTimer(10); break;
         case C.ITEM_TYPES.TRIPLE: {
             let slots = Math.max(0, S.maxBallCount - S.balls.length);
             if (slots <= 0) break;

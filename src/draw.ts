@@ -90,16 +90,11 @@ export function drawPaddle(ctx: CanvasRenderingContext2D): void {
 
     // 패들 본체 Glow
     ctx.shadowBlur = 15;
-    ctx.shadowColor = S.laserTimer > 0 ? NEON_MAGENTA : NEON_CYAN;
+    ctx.shadowColor = NEON_CYAN;
     
     const g = ctx.createLinearGradient(x, y, x, y + h);
-    if (S.laserTimer > 0) {
-        g.addColorStop(0, '#ff44aa');
-        g.addColorStop(1, '#880044');
-    } else {
-        g.addColorStop(0, '#00d2ff');
-        g.addColorStop(1, '#0055ff');
-    }
+    g.addColorStop(0, '#00d2ff');
+    g.addColorStop(1, '#0055ff');
 
     ctx.fillStyle = g;
     roundRect(ctx, x, y, w, h, r);
@@ -155,8 +150,7 @@ export function drawItems(ctx: CanvasRenderingContext2D): void {
             [C.ITEM_TYPES.EXTEND]: NEON_CYAN,
             [C.ITEM_TYPES.MULTI2]: '#4ea8de',
             [C.ITEM_TYPES.TRIPLE]: NEON_YELLOW,
-            [C.ITEM_TYPES.FULLWIDTH]: NEON_MAGENTA,
-            [C.ITEM_TYPES.LASER]: '#ff3333'
+            [C.ITEM_TYPES.FULLWIDTH]: NEON_MAGENTA
         } as Record<string, string>)[it.type] || '#999';
 
         ctx.shadowBlur = 10;
@@ -174,23 +168,12 @@ export function drawItems(ctx: CanvasRenderingContext2D): void {
                 [C.ITEM_TYPES.EXTEND]: 'XL',
                 [C.ITEM_TYPES.MULTI2]: '+2',
                 [C.ITEM_TYPES.TRIPLE]: '3X',
-                [C.ITEM_TYPES.FULLWIDTH]: 'MAX',
-                [C.ITEM_TYPES.LASER]: 'LSR'
+                [C.ITEM_TYPES.FULLWIDTH]: 'MAX'
             } as Record<string, string>)[it.type] || '?',
             it.x + it.w / 2,
             it.y + it.h / 2 + 5
         );
     }
-}
-
-export function drawLasers(ctx: CanvasRenderingContext2D): void {
-    ctx.shadowBlur = 8;
-    ctx.shadowColor = NEON_MAGENTA;
-    ctx.fillStyle = '#fff';
-    for (const laser of S.lasers) {
-        ctx.fillRect(laser.x - laser.w / 2, laser.y, laser.w, laser.h);
-    }
-    ctx.shadowBlur = 0;
 }
 
 export function drawBricks(ctx: CanvasRenderingContext2D): void {

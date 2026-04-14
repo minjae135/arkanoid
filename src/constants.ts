@@ -48,13 +48,12 @@ export const SIZE_PRESET: Record<SizePresetType, { rows: number; cols: number }>
 };
 
 // 아이템 종류
-export type ItemType = 'EXTEND' | 'MULTI2' | 'TRIPLE' | 'FULLWIDTH' | 'LASER';
+export type ItemType = 'EXTEND' | 'MULTI2' | 'TRIPLE' | 'FULLWIDTH';
 export const ITEM_TYPES: Record<ItemType, ItemType> = {
     EXTEND: 'EXTEND',
     MULTI2: 'MULTI2',
     TRIPLE: 'TRIPLE',
-    FULLWIDTH: 'FULLWIDTH',
-    LASER: 'LASER'
+    FULLWIDTH: 'FULLWIDTH'
 };
 
 // 블록 종류

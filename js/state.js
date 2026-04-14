@@ -34,11 +34,9 @@ export const baseBall = { radius: C.BALL.radius, speed: C.BALL.speed };
 export let balls = [];
 export let bricks = [];
 export let items = [];
-export let lasers = [];
 // 파워업 타이머
 export let extendTimer = 0;
 export let fullWidthTimer = 0;
-export let laserTimer = 0;
 // --- 상태 변경 함수 ---
 export function setScore(newScore) { score = newScore; }
 export function setHighScore(newHighScore) { highScore = newHighScore; }
@@ -54,7 +52,6 @@ export function setBallSpeedScale(scale) { ballSpeedScale = scale; }
 export function setMaxBallCount(count) { maxBallCount = count; }
 export function setExtendTimer(time) { extendTimer = time; }
 export function setFullWidthTimer(time) { fullWidthTimer = time; }
-export function setLaserTimer(time) { laserTimer = time; }
 export function setShakeAmount(amount) { shakeAmount = amount; }
 export function setBgOffset(offset) { bgOffset = offset; }
 export function setCombo(c) { combo = c; }
@@ -62,7 +59,6 @@ export function setComboTimer(t) { comboTimer = t; }
 export function resetItems() { items.length = 0; }
 export function resetBalls(newBalls) { balls = newBalls; }
 export function resetBricks(newBricks) { bricks = newBricks; }
-export function resetLasers() { lasers.length = 0; }
 // --- 최고 점수 관리 ---
 export function loadHighScore() {
     highScore = parseInt(localStorage.getItem('arkanoidHighScore') || '0') || 0;
