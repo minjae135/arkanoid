@@ -52,11 +52,22 @@ function updateModalButtonsUI(): void {
 
 function updateSizeButtonsUI(): void {
     const map = {SMALL: sizeSmall, NORMAL: sizeNormal, LARGE: sizeLarge, XLARGE: sizeXLarge};
-    Object.values(map).forEach(el => {
-        el?.classList.remove('active');
-        el?.setAttribute('aria-pressed', 'false');
+    const isHard = S.currentMode === C.MODES.HARD;
+
+    Object.entries(map).forEach(([size, el]) => {
+        if (!el) return;
+        el.classList.remove('active', 'locked');
+        el.removeAttribute('disabled');
+        el.setAttribute('aria-pressed', 'false');
+
+        // 하드 모드에서는 SMALL, NORMAL 잠금
+        if (isHard && (size === 'SMALL' || size === 'NORMAL')) {
+            el.classList.add('locked');
+            el.setAttribute('disabled', 'true');
+        }
     });
-    const active = map[S.currentSize];
+
+    const active = map[S.currentSize as keyof typeof map];
     if (active) {
         active.classList.add('active');
         active.setAttribute('aria-pressed', 'true');

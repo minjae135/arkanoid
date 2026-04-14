@@ -92,10 +92,16 @@ export function resetGame(): void {
 
 export function setMode(mode: C.ModeType): void {
     S.setCurrentMode(mode);
+    // 하드 모드일 때 현재 사이즈가 SMALL이나 NORMAL이면 강제로 LARGE로 변경
+    if (mode === C.MODES.HARD && (S.currentSize === 'SMALL' || S.currentSize === 'NORMAL')) {
+        S.setCurrentSize('LARGE');
+    }
     resetGame();
 }
 
 export function setSize(size: C.SizePresetType): void {
+    // 하드 모드에서는 강제로 큰 사이즈만 허용 (UI에서 막지만 이중 안전장치)
+    if (S.currentMode === C.MODES.HARD && (size === 'SMALL' || size === 'NORMAL')) return;
     S.setCurrentSize(size);
     resetGame();
 }
@@ -135,15 +141,23 @@ export function spawnItemAt(brick: S.Brick): void {
     let dropChance = S.currentMode === C.MODES.SPEED ? 1.0 : S.currentMode === C.MODES.HARD ? 0.12 : 0.35;
     if (Math.random() > dropChance) return;
 
-    const wExtend = (S.extendTimer > 0 || S.fullWidthTimer > 0) ? 0 : 40;
-    let weighted: { type: C.ItemType, w: number }[] = [
-        { type: C.ITEM_TYPES.EXTEND, w: wExtend },
-        { type: C.ITEM_TYPES.MULTI2, w: 35 },
-        { type: C.ITEM_TYPES.TRIPLE, w: 23 },
-        { type: C.ITEM_TYPES.LASER, w: 15 },
-    ];
-    if (S.currentMode !== C.MODES.HARD) {
-        weighted.push({ type: C.ITEM_TYPES.FULLWIDTH, w: 2 });
+    let weighted: { type: C.ItemType, w: number }[];
+
+    if (S.currentMode === C.MODES.HARD) {
+        // 하드 모드: 오직 XL(+20%)과 +2(MULTI2)만 드롭
+        weighted = [
+            { type: C.ITEM_TYPES.EXTEND, w: 50 },
+            { type: C.ITEM_TYPES.MULTI2, w: 50 },
+        ];
+    } else {
+        const wExtend = (S.extendTimer > 0 || S.fullWidthTimer > 0) ? 0 : 40;
+        weighted = [
+            { type: C.ITEM_TYPES.EXTEND, w: wExtend },
+            { type: C.ITEM_TYPES.MULTI2, w: 35 },
+            { type: C.ITEM_TYPES.TRIPLE, w: 23 },
+            { type: C.ITEM_TYPES.LASER, w: 15 },
+            { type: C.ITEM_TYPES.FULLWIDTH, w: 2 },
+        ];
     }
 
     if (weighted.every(w => w.w <= 0)) return;

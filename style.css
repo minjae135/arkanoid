@@ -248,6 +248,49 @@ body {
     color: #fff;
 }
 
+/* 잠금 버튼 스타일 (하드 모드 전용) */
+.mode-choice.locked {
+    position: relative;
+    cursor: not-allowed;
+    /* 원래 버튼 색감 유지 */
+    background: rgba(20, 26, 42, 0.9) !important;
+    border-color: var(--neon-cyan) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    overflow: hidden;
+    pointer-events: none;
+    filter: none; /* 전체를 흐리게 만들던 필터 제거 */
+}
+
+/* 입체적으로 엮인 굵은 노란 사슬 X자 */
+.mode-choice.locked::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* 개별 고리가 엮인 사슬 두 줄이 X자로 교차하는 SVG */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cg id='link'%3E%3Crect x='-8' y='-3' width='16' height='6' rx='3' stroke='%23f3ff00' stroke-width='2.5' fill='none' /%3E%3Crect x='-2' y='-1' width='4' height='2' fill='%23f3ff00' /%3E%3C/g%3E%3C/defs%3E%3Cg transform='translate(50,50) rotate(45)'%3E%3Cuse href='%23link' x='-45' /%3E%3Cuse href='%23link' x='-30' /%3E%3Cuse href='%23link' x='-15' /%3E%3Cuse href='%23link' x='0' /%3E%3Cuse href='%23link' x='15' /%3E%3Cuse href='%23link' x='30' /%3E%3Cuse href='%23link' x='45' /%3E%3C/g%3E%3Cg transform='translate(50,50) rotate(-45)'%3E%3Cuse href='%23link' x='-45' /%3E%3Cuse href='%23link' x='-30' /%3E%3Cuse href='%23link' x='-15' /%3E%3Cuse href='%23link' x='0' /%3E%3Cuse href='%23link' x='15' /%3E%3Cuse href='%23link' x='30' /%3E%3Cuse href='%23link' x='45' /%3E%3C/g%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    opacity: 1;
+    z-index: 5;
+    filter: drop-shadow(0 0 6px var(--neon-yellow));
+}
+
+/* 중앙 입체적인 노란 자물쇠 */
+.mode-choice.locked::after {
+    content: '🔒';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    z-index: 10;
+    filter: drop-shadow(0 0 10px var(--neon-yellow));
+}
+
+.mode-choice.locked span {
+    opacity: 0.5;
+}
+
 /* 도움말 모달 특수 스타일 */
 #help-backdrop .modal {
     border-color: var(--neon-yellow);
