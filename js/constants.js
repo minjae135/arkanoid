@@ -55,9 +55,9 @@ export const BLOCK_COLORS = {
 };
 // 점수 설정
 export const SCORING = {
-    BRICK: 10,
-    PADDLE_BOUNCE: 5,
-    ITEM_CATCH: 50,
+    BRICK: 150, // 10 * 15
+    PADDLE_BOUNCE: 75, // 5 * 15
+    ITEM_CATCH: 750, // 50 * 15
     COMBO_WINDOW: 1.5 // 1.5초 내에 다음 타격 시 콤보 유지
 };
 //# sourceMappingURL=constants.js.map

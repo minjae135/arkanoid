@@ -18,7 +18,7 @@ export function handleBrickCollision(brick) {
     S.setCombo(S.combo + 1);
     S.setComboTimer(C.SCORING.COMBO_WINDOW);
     const multiplier = S.combo * S.balls.length;
-    const basePoints = brick.type === C.BLOCK_TYPES.EXPLOSIVE ? 20 : C.SCORING.BRICK;
+    const basePoints = brick.type === C.BLOCK_TYPES.EXPLOSIVE ? 300 : C.SCORING.BRICK;
     S.setScore(S.score + basePoints * multiplier);
     if (brick.type === C.BLOCK_TYPES.DURABLE) {
         brick.hp--;
