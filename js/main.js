@@ -227,10 +227,10 @@ function render() {
     }
     else if (!S.running) {
         if (S.won) {
-            D.drawOverlay(ctx, 'CLEAR!', `SCORE: ${S.score}  •  TAP OR R TO RESET`);
+            D.drawOverlay(ctx, 'CLEAR!', `SCORE: ${S.score.toLocaleString()}  •  TAP OR R TO RESET`);
         }
         else if (S.lives <= 0) {
-            D.drawOverlay(ctx, 'GAME OVER', `SCORE: ${S.score}  •  TAP OR R TO RESET`);
+            D.drawOverlay(ctx, 'GAME OVER', `SCORE: ${S.score.toLocaleString()}  •  TAP OR R TO RESET`);
         }
         else {
             D.drawOverlay(ctx, 'STOPPED', 'TAP OR R TO RESET');

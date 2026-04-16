@@ -60,12 +60,12 @@ export function drawHUD(ctx: CanvasRenderingContext2D): void {
     };
 
     // 상단 행: 점수, 모드, 최고기록
-    drawTextWithGlow(`SCORE: ${S.score}`, 20, 16, 'left');
+    drawTextWithGlow(`SCORE: ${S.score.toLocaleString()}`, 20, 16, 'left');
     
     const modeLabel = S.currentMode === C.MODES.SPEED ? 'SPEED' : S.currentMode === C.MODES.HARD ? 'HARD' : 'NORMAL';
     drawTextWithGlow(`MODE: ${modeLabel}`, C.WIDTH / 2, 16, 'center', NEON_MAGENTA);
     
-    drawTextWithGlow(`HIGH: ${S.highScore}`, C.WIDTH - 20, 16, 'right');
+    drawTextWithGlow(`HIGH: ${S.highScore.toLocaleString()}`, C.WIDTH - 20, 16, 'right');
 
     // 하단 행: 콤보, 멀티볼, 목숨
     if (S.combo > 1) {
