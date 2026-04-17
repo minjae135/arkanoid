@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Arkanoid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game" tabindex="0"></canvas>
+<div class="controls">
+    <button id="btn-home" class="mode-btn" type="button" onclick="location.href='index.html'">메인으로</button>
+    <button id="btn-reset" class="mode-btn" type="button">다시 시작</button>
+    <button id="btn-mode" class="mode-btn" type="button">모드 변경</button>
+    <button id="btn-size" class="mode-btn" type="button">블록 크기</button>
+    <label class="slider-wrap" for="speed-slider" title="공 속도 조절">
+        <span>공 속도</span>
+        <input id="speed-slider" type="range" min="0.5" max="2.0" step="0.05" value="1.0" />
+        <output id="speed-value">100%</output>
+    </label>
+    <label class="slider-wrap" for="max-balls-slider" title="공 최대 개수 조절">
+        <span>최대 공</span>
+        <input id="max-balls-slider" type="range" min="10" max="10000" step="10" value="500" />
+        <output id="max-balls-value">500</output>
+    </label>
+    <button id="btn-help" class="mode-btn" type="button">방법 보기</button>
+</div>
+<div id="mode-backdrop" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mode-title">
+        <h2 id="mode-title">모드 선택</h2>
+        <div class="mode-choices">
+            <button id="choice-normal" class="mode-choice" type="button" data-mode="NORMAL">기본</button>
+            <button id="choice-speed" class="mode-choice" type="button" data-mode="SPEED">스피드</button>
+            <button id="choice-hard" class="mode-choice" type="button" data-mode="HARD">하드</button>
+        </div>
+        <div class="modal-actions">
+            <button id="mode-cancel" class="secondary" type="button">닫기</button>
+        </div>
+    </div>
+</div>
+<div id="size-backdrop" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="size-title">
+        <h2 id="size-title">블록 크기</h2>
+        <div class="mode-choices">
+            <button id="size-small"  class="mode-choice" type="button" data-size="SMALL">작음</button>
+            <button id="size-normal" class="mode-choice" type="button" data-size="NORMAL">보통</button>
+            <button id="size-large"  class="mode-choice" type="button" data-size="LARGE">큼</button>
+            <button id="size-xlarge" class="mode-choice" type="button" data-size="XLARGE">매우 큼</button>
+        </div>
+        <div class="modal-actions">
+            <button id="size-cancel" class="secondary" type="button">닫기</button>
+        </div>
+    </div>
+</div>
+<!-- 방법 보기 모달 -->
+<div id="help-backdrop" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+        <h2 id="help-title">게임 방법</h2>
+        <div style="display:grid; gap:12px; color:#cfe7ff; font: 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, 'Noto Sans KR', sans-serif;">
+            <div>
+                <strong>🎮 게임 모드</strong><br>
+                - <b>NORMAL</b>: 표준 난이도와 드롭률을 가진 기본 모드입니다.<br>
+                - <b>SPEED</b>: 공의 기본 속도가 빠르며, 모든 블록에서 100% 아이템이 드롭됩니다.<br>
+                - <b>HARD</b>: <b>지옥 난이도.</b> 아이템이 +2와 XL만 나오며, 블록 크기가 '큼' 이상으로 고정됩니다.
+            </div>
+            <div>
+                <strong>🧱 블록 크기</strong><br>
+                블록의 전체 개수와 배열 밀도를 결정합니다. '작음'일수록 정교한 컨트롤이 필요합니다. (하드 모드에서는 제한됨)
+            </div>
+            <div>
+                <strong>✨ 아이템</strong><br>
+                - <b>XL</b>: 패들 길이가 일정 시간 증가합니다.<br>
+                - <b>+2</b>: 패들에서 새로운 공 2개를 즉시 발사합니다.<br>
+                - <b>3x</b>: 현재 화면의 모든 공이 각각 3개로 분제됩니다.<br>
+                - <b>MAX</b>: 패들이 화면 끝까지 확장됩니다. (하드 제외)
+            </div>
+            <div>
+                <strong>특수 블록</strong><br>
+                - 내구도 블록 (분홍색): 여러 번 맞춰야 파괴됩니다.<br>
+                - 폭발 블록 (주황색): 파괴 시 주변 블록을 함께 제거합니다.
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button id="help-cancel" class="secondary" type="button">닫기</button>
+        </div>
+    </div>
+</div>
+<script type="module" src="js/classic.js"></script>
+</body>
+</html>

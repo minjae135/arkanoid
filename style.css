@@ -14,6 +14,124 @@
 
 * { box-sizing: border-box; }
 
+/* 메인 메뉴 스타일 */
+.menu-body {
+    background: radial-gradient(circle at 50% 30%, #0d0f16 0%, #05060a 100%);
+    overflow-y: auto; /* 메뉴는 스크롤 허용 */
+    position: relative;
+}
+
+.menu-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.menu-header {
+    text-align: center;
+}
+
+.menu-header h1 {
+    font: 900 64px 'Orbitron', sans-serif;
+    color: #fff;
+    margin: 0;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
+}
+
+.menu-header .subtitle {
+    font: 700 18px 'Orbitron', sans-serif;
+    color: var(--neon-magenta);
+    letter-spacing: 8px;
+    margin-top: 10px;
+    text-shadow: 0 0 10px var(--neon-magenta);
+}
+
+.menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.menu-item {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: rgba(15, 20, 36, 0.8);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.1), transparent);
+    transition: 0.5s;
+}
+
+.menu-item:hover {
+    border-color: var(--neon-cyan);
+    transform: translateX(10px) scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+    background: rgba(20, 26, 42, 0.95);
+}
+
+.menu-item:hover::before {
+    left: 100%;
+}
+
+.menu-item .mode-title {
+    font: 900 24px 'Orbitron', sans-serif;
+    color: var(--neon-cyan);
+    margin-bottom: 8px;
+}
+
+.menu-item .mode-desc {
+    font-size: 14px;
+    color: #8a94ad;
+}
+
+.menu-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-style: dashed;
+}
+
+.menu-item.disabled:hover {
+    transform: none;
+    border-color: var(--border-color);
+    box-shadow: none;
+}
+
+.menu-footer {
+    font-size: 12px;
+    color: #4b5563;
+    letter-spacing: 1px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+    .menu-header h1 { font-size: 48px; }
+    .menu-container { gap: 40px; }
+}
+
+/* 기존 스타일 유지 */
 html, body {
     height: 100%;
     margin: 0;
@@ -300,4 +418,53 @@ body {
     color: var(--neon-yellow);
 }
 
+/* 업그레이드 모달 특화 */
+.upgrade-modal {
+    border-color: var(--neon-yellow);
+    box-shadow: 0 0 40px rgba(243, 255, 0, 0.3);
+    max-width: 550px;
+}
+
+.upgrade-subtitle {
+    text-align: center;
+    color: #8a94ad;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.upgrade-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.upgrade-card {
+    background: rgba(20, 26, 42, 0.9);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.upgrade-card:hover {
+    border-color: var(--neon-yellow);
+    background: rgba(243, 255, 0, 0.05);
+    transform: scale(1.03);
+}
+
+.upgrade-card .card-name {
+    font: 700 18px 'Orbitron', sans-serif;
+    color: var(--neon-yellow);
+}
+
+.upgrade-card .card-desc {
+    font-size: 13px;
+    color: #cdd7ee;
+}
+
+/* 기존 스타일 유지 */
 [hidden] { display: none !important; }

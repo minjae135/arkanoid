@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Arkanoid - Stage Mode</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game" tabindex="0"></canvas>
+
+<div class="controls">
+    <button id="btn-home" class="mode-btn" type="button" onclick="location.href='index.html'">메인으로</button>
+    <button id="btn-reset" class="mode-btn" type="button">스테이지 리셋</button>
+    <label class="slider-wrap" for="speed-slider">
+        <span>공 속도</span>
+        <input id="speed-slider" type="range" min="0.5" max="2.0" step="0.05" value="1.0" />
+        <output id="speed-value">100%</output>
+    </label>
+</div>
+
+<!-- 스테이지 클리어 모달 -->
+<div id="stage-clear-backdrop" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true">
+        <h2 id="clear-title" style="color: var(--neon-cyan)">STAGE CLEAR!</h2>
+        <p id="clear-info" style="text-align:center; margin: 20px 0; color: #cdd7ee;"></p>
+        <div class="modal-actions">
+            <button id="btn-next-stage" class="mode-btn" style="border-color: var(--neon-cyan); color: var(--neon-cyan)">다음 스테이지</button>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="js/stage.js"></script>
+</body>
+</html>

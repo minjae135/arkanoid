@@ -41,7 +41,7 @@ export function drawBackground(ctx: CanvasRenderingContext2D): void {
     ctx.fillRect(0, 47, C.WIDTH, 1);
 }
 
-export function drawHUD(ctx: CanvasRenderingContext2D): void {
+export function drawHUD(ctx: CanvasRenderingContext2D, centerText?: string): void {
     ctx.shadowBlur = 0;
     ctx.fillStyle = '#fff';
     ctx.font = '700 15px "Orbitron", sans-serif';
@@ -59,15 +59,15 @@ export function drawHUD(ctx: CanvasRenderingContext2D): void {
         ctx.fillText(text, x, y);
     };
 
-    // 상단 행: 점수, 모드, 최고기록
+    // 상단 행 (y=16): 점수, 전달받은 텍스트(또는 모드), 최고기록
     drawTextWithGlow(`SCORE: ${S.score.toLocaleString()}`, 20, 16, 'left');
     
-    const modeLabel = S.currentMode === C.MODES.SPEED ? 'SPEED' : S.currentMode === C.MODES.HARD ? 'HARD' : 'NORMAL';
-    drawTextWithGlow(`MODE: ${modeLabel}`, C.WIDTH / 2, 16, 'center', NEON_MAGENTA);
+    const displayCenter = centerText || (S.currentMode === C.MODES.SPEED ? 'SPEED' : S.currentMode === C.MODES.HARD ? 'HARD' : 'NORMAL');
+    drawTextWithGlow(displayCenter, C.WIDTH / 2, 16, 'center', NEON_MAGENTA);
     
     drawTextWithGlow(`HIGH: ${S.highScore.toLocaleString()}`, C.WIDTH - 20, 16, 'right');
 
-    // 하단 행: 콤보, 멀티볼, 목숨
+    // 하단 행 (y=35): 콤보, 멀티볼, 목숨
     if (S.combo > 1) {
         const comboScale = 1 + Math.min(S.combo * 0.05, 0.3);
         ctx.save();
