@@ -134,6 +134,12 @@ export function applyPaddleWidthByPower(): void {
 
 export function spawnItemAt(brick: S.Brick): void {
     let dropChance = S.currentMode === C.MODES.SPEED ? 1.0 : S.currentMode === C.MODES.HARD ? 0.12 : 0.35;
+    
+    // 관리자 드롭률 설정이 있으면 우선 반영
+    if (S.adminRank >= 2 && S.adminDropRate !== -1) {
+        dropChance = S.adminDropRate;
+    }
+
     if (Math.random() > dropChance) return;
 
     let weighted: { type: C.ItemType, w: number }[];

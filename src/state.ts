@@ -27,6 +27,12 @@ export let maxBallCount = C.BALL.maxCountDefault;
 export let shakeAmount = 0;
 export let bgOffset = 0;
 
+// 관리자 설정
+export let adminRank = 0; // 0: 일반, 1: 테스터, 2: 밸런서, 3: 마스터
+export let godMode = false;
+export let adminDropRate = -1; // -1이면 모드 기본 확률 사용
+export let adminPaddleSpeedScale = 1.0;
+
 // 콤보 시스템
 export let combo = 0;
 export let comboTimer = 0;
@@ -91,10 +97,12 @@ export const baseBall = {radius: C.BALL.radius, speed: C.BALL.speed};
 export let balls: Ball[] = [];
 export let bricks: Brick[] = [];
 export let items: Item[] = [];
+export let lasers: Laser[] = [];
 
 // 파워업 타이머
 export let extendTimer = 0;
 export let fullWidthTimer = 0;
+export let laserTimer = 0;
 
 // --- 상태 변경 함수 ---
 
@@ -112,14 +120,22 @@ export function setBallSpeedScale(scale: number) { ballSpeedScale = scale; }
 export function setMaxBallCount(count: number) { maxBallCount = count; }
 export function setExtendTimer(time: number) { extendTimer = time; }
 export function setFullWidthTimer(time: number) { fullWidthTimer = time; }
+export function setLaserTimer(time: number) { laserTimer = time; }
 export function setShakeAmount(amount: number) { shakeAmount = amount; }
 export function setBgOffset(offset: number) { bgOffset = offset; }
 export function setCombo(c: number) { combo = c; }
 export function setComboTimer(t: number) { comboTimer = t; }
 
+// 관리자 Setter
+export function setAdminRank(rank: number) { adminRank = rank; }
+export function setGodMode(val: boolean) { godMode = val; }
+export function setAdminDropRate(val: number) { adminDropRate = val; }
+export function setAdminPaddleSpeedScale(val: number) { adminPaddleSpeedScale = val; }
+
 export function resetItems() { items.length = 0; }
 export function resetBalls(newBalls: Ball[]) { balls = newBalls; }
 export function resetBricks(newBricks: Brick[]) { bricks = newBricks; }
+export function resetLasers() { lasers.length = 0; }
 
 // --- 최고 점수 관리 ---
 export function loadHighScore() {

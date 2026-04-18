@@ -1,5 +1,6 @@
 // src/input.ts
 import * as C from './constants.js';
+import { handleScoreClick } from './admin.js';
 
 export let keys = new Set<string>();
 export let mouseX = C.WIDTH / 2;
@@ -17,7 +18,19 @@ export const updatePointerPosition = (canvas: HTMLCanvasElement, e: any): void =
 };
 
 export function initInput(canvas: HTMLCanvasElement, onPointerDown: (e: PointerEvent) => void): void {
-    canvas.addEventListener('pointerdown', onPointerDown, { passive: false });
+    canvas.addEventListener('pointerdown', (e) => {
+        // SCORE 영역 (상단 좌측) 클릭 감지 (관리자 진입용)
+        const rect = canvas.getBoundingClientRect();
+        const clickX = (e.clientX - rect.left) / rect.width * C.WIDTH;
+        const clickY = (e.clientY - rect.top) / rect.height * C.HEIGHT;
+        
+        if (clickX < 150 && clickY < 40) {
+            handleScoreClick();
+        }
+
+        onPointerDown(e);
+    }, { passive: false });
+
     canvas.addEventListener('pointermove', (e) => {
         updatePointerPosition(canvas, e);
     }, { passive: true });

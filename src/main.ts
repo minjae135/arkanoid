@@ -75,10 +75,11 @@ function update(dt: number): void {
     const moveLeft = I.keys.has('ArrowLeft') || I.keys.has('KeyA');
     const moveRight = I.keys.has('ArrowRight') || I.keys.has('KeyD');
     let targetX = S.paddle.x;
+    const paddleSpeed = S.paddle.speed * S.adminPaddleSpeedScale;
     if (moveLeft && !moveRight) {
-        targetX = S.paddle.x - S.paddle.speed * dt;
+        targetX = S.paddle.x - paddleSpeed * dt;
     } else if (moveRight && !moveLeft) {
-        targetX = S.paddle.x + S.paddle.speed * dt;
+        targetX = S.paddle.x + paddleSpeed * dt;
     } else if (!I.mouseSnapLock) {
         targetX = I.mouseX - S.paddle.width / 2;
     }
@@ -197,6 +198,12 @@ function update(dt: number): void {
     }
 
     if (S.balls.length === 0) {
+        // 관리자 무적 모드 체크
+        if (S.adminRank >= 1 && S.godMode) {
+            M.resetBalls(true);
+            return;
+        }
+
         S.setLives(S.lives - 1);
         S.setShakeAmount(10);
         if (S.lives <= 0) {

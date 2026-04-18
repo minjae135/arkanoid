@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prebuild": "node scripts/generate-secrets.js",
     "build": "tsc",
     "watch": "tsc -w"
   },

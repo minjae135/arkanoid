@@ -6,3 +6,7 @@ node_modules/
 
 # IDE 설정 파일
 .idea/
+
+# Secret Keys
+admin_keys.json
+src/admin-secrets.ts
