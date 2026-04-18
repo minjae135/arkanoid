@@ -26,6 +26,7 @@ export let godMode = false;
 export let adminDropRate = -1; // -1이면 모드 기본 확률 사용
 export let adminPaddleSpeedScale = 1.0;
 export let adminScoreMultiplier = 1.0;
+export let adminMaxBallCount = -1; // -1이면 모드 기본값 사용, 관리자 전용
 // 콤보 시스템
 export let combo = 0;
 export let comboTimer = 0;
@@ -71,6 +72,11 @@ export function setGodMode(val) { godMode = val; }
 export function setAdminDropRate(val) { adminDropRate = val; }
 export function setAdminPaddleSpeedScale(val) { adminPaddleSpeedScale = val; }
 export function setAdminScoreMultiplier(val) { adminScoreMultiplier = val; }
+export function setAdminMaxBallCount(val) {
+    adminMaxBallCount = val;
+    if (val !== -1)
+        maxBallCount = val;
+}
 export function resetItems() { items.length = 0; }
 export function resetBalls(newBalls) { balls = newBalls; }
 export function resetBricks(newBricks) { bricks = newBricks; }

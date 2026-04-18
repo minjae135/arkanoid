@@ -2,6 +2,7 @@
 import * as S from './state.js';
 import * as C from './constants.js';
 import * as M from './manager.js';
+import { syncSlidersWithState } from './ui.js';
 import { ADMIN_HASHES } from './admin-secrets.js';
 let scoreClickCount = 0;
 let lastClickTime = 0;
@@ -108,6 +109,12 @@ function createAdminModalUI() {
                            style="width: 60px; background: #000; border: 1px solid var(--neon-cyan); color: #fff; text-align: center; border-radius: 4px;">
                 </div>
 
+                <div class="admin-row rank-2">
+                    <label>⚽ 최대 공 개수</label>
+                    <input type="number" id="input-max-balls" min="1" step="10" value="${S.maxBallCount}" 
+                           style="width: 80px; background: #000; border: 1px solid var(--neon-cyan); color: #fff; text-align: center; border-radius: 4px;">
+                </div>
+
                 <div class="admin-row rank-3">
                     <label>🪄 아이템 즉시 소환</label>
                     <div class="spawn-btns">
@@ -130,6 +137,7 @@ function createAdminModalUI() {
     document.getElementById('admin-close')?.addEventListener('click', () => {
         document.getElementById('admin-modal').hidden = true;
         S.setPaused(false);
+        syncSlidersWithState(); // 닫을 때 UI 최종 동기화
     });
     document.getElementById('check-god-mode')?.addEventListener('change', (e) => {
         S.setGodMode(e.target.checked);
@@ -143,6 +151,7 @@ function createAdminModalUI() {
         const val = parseFloat(e.target.value);
         S.setAdminPaddleSpeedScale(val);
         document.getElementById('label-paddle-speed').textContent = `${val.toFixed(1)}x`;
+        syncSlidersWithState(); // 속도 변경 시 슬라이더 동기화
     });
     document.getElementById('input-score-multiplier')?.addEventListener('change', (e) => {
         const val = parseFloat(e.target.value);
@@ -153,6 +162,18 @@ function createAdminModalUI() {
             // 잘못된 값 입력 시 기본값으로 리셋
             S.setAdminScoreMultiplier(1.0);
             e.target.value = "1.0";
+        }
+    });
+    document.getElementById('input-max-balls')?.addEventListener('change', (e) => {
+        const val = parseInt(e.target.value);
+        if (!isNaN(val) && val >= 1) {
+            S.setAdminMaxBallCount(val);
+            syncSlidersWithState(); // 값 변경 즉시 메인 UI 반영
+        }
+        else {
+            S.setAdminMaxBallCount(C.BALL.maxCountDefault);
+            e.target.value = String(C.BALL.maxCountDefault);
+            syncSlidersWithState();
         }
     });
     // 글로벌 함수 등록 (아이템 즉시 소환용)
@@ -178,7 +199,9 @@ function updateAdminUIByRank() {
     // 권한에 따른 요소 가리기
     const rows = document.querySelectorAll('.admin-row');
     rows.forEach(row => {
-        if (row.classList.contains('rank-2') && rank < 2)
+        if (row.classList.contains('rank-1') && rank < 1)
+            row.style.display = 'none';
+        else if (row.classList.contains('rank-2') && rank < 2)
             row.style.display = 'none';
         else if (row.classList.contains('rank-3') && rank < 3)
             row.style.display = 'none';

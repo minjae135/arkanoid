@@ -167,3 +167,22 @@ export function initUI(canvasElement: HTMLCanvasElement, callbacks: {
     updateModalButtonsUI();
     updateSizeButtonsUI();
 }
+
+/**
+ * 상태(S)의 값을 UI 슬라이더에 반영합니다. (어드민 설정 변경 등 외부 요인 시 사용)
+ */
+export function syncSlidersWithState(): void {
+    if (speedSlider) {
+        speedSlider.value = String(S.ballSpeedScale);
+        if (speedValue) speedValue.textContent = `${Math.round(S.ballSpeedScale * 100)}%`;
+    }
+    if (maxBallsSlider) {
+        // 어드민이 설정한 값이 현재 슬라이더의 최대값보다 크면 최대값도 확장
+        const currentMax = parseInt(maxBallsSlider.max || '10000');
+        if (S.maxBallCount > currentMax) {
+            maxBallsSlider.max = String(S.maxBallCount);
+        }
+        maxBallsSlider.value = String(S.maxBallCount);
+        if (maxBallsValue) maxBallsValue.textContent = String(S.maxBallCount);
+    }
+}
