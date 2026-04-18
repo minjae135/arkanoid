@@ -84,6 +84,7 @@ function openAdminMenu(): void {
     updateAdminUIByRank();
     if (adminModal) adminModal.hidden = false;
     S.setPaused(true);
+    S.setShakeAmount(0); // 어드민 메뉴 열릴 때 흔들림 중지
 }
 
 function createAdminModalUI(): void {

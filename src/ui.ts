@@ -79,6 +79,7 @@ function openModal(backdropElement: HTMLElement, focusElement: HTMLElement | nul
     S.setWasPausedBeforeModal(S.paused);
     S.setUiModalOpen(true);
     S.setPaused(true);
+    S.setShakeAmount(0); // 메뉴가 열리면 흔들림 중지
     backdropElement.hidden = false;
     focusElement?.focus();
 }
