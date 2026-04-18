@@ -32,6 +32,7 @@ export let adminRank = 0; // 0: 일반, 1: 테스터, 2: 밸런서, 3: 마스터
 export let godMode = false;
 export let adminDropRate = -1; // -1이면 모드 기본 확률 사용
 export let adminPaddleSpeedScale = 1.0;
+export let adminScoreMultiplier = 1.0;
 
 // 콤보 시스템
 export let combo = 0;
@@ -131,6 +132,7 @@ export function setAdminRank(rank: number) { adminRank = rank; }
 export function setGodMode(val: boolean) { godMode = val; }
 export function setAdminDropRate(val: number) { adminDropRate = val; }
 export function setAdminPaddleSpeedScale(val: number) { adminPaddleSpeedScale = val; }
+export function setAdminScoreMultiplier(val: number) { adminScoreMultiplier = val; }
 
 export function resetItems() { items.length = 0; }
 export function resetBalls(newBalls: Ball[]) { balls = newBalls; }

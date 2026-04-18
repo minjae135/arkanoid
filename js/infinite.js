@@ -118,11 +118,12 @@ function update(dt) {
     const moveLeft = I.keys.has('ArrowLeft') || I.keys.has('KeyA');
     const moveRight = I.keys.has('ArrowRight') || I.keys.has('KeyD');
     let targetX = S.paddle.x;
+    const paddleSpeed = S.paddle.speed * S.adminPaddleSpeedScale; // 관리자 속도 배율 적용
     if (moveLeft && !moveRight) {
-        targetX = S.paddle.x - S.paddle.speed * dt;
+        targetX = S.paddle.x - paddleSpeed * dt;
     }
     else if (moveRight && !moveLeft) {
-        targetX = S.paddle.x + S.paddle.speed * dt;
+        targetX = S.paddle.x + paddleSpeed * dt;
     }
     else if (!I.mouseSnapLock) {
         targetX = I.mouseX - S.paddle.width / 2;
@@ -158,7 +159,10 @@ function update(dt) {
             M.applyItem(it.type);
             playSound('item');
             S.setShakeAmount(4);
-            S.setScore(S.score + C.SCORING.ITEM_CATCH);
+            let itemScore = C.SCORING.ITEM_CATCH;
+            if (S.adminRank >= 2 && S.adminScoreMultiplier !== 1.0)
+                itemScore *= S.adminScoreMultiplier;
+            S.setScore(S.score + itemScore);
             S.items.splice(i, 1);
             continue;
         }

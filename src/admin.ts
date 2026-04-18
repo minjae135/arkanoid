@@ -109,6 +109,12 @@ function createAdminModalUI(): void {
                     <span id="label-paddle-speed">1.0x</span>
                 </div>
 
+                <div class="admin-row rank-2">
+                    <label>💰 점수 획득 배율</label>
+                    <input type="number" id="input-score-multiplier" min="1" step="0.5" value="1.0" 
+                           style="width: 60px; background: #000; border: 1px solid var(--neon-cyan); color: #fff; text-align: center; border-radius: 4px;">
+                </div>
+
                 <div class="admin-row rank-3">
                     <label>🪄 아이템 즉시 소환</label>
                     <div class="spawn-btns">
@@ -148,6 +154,17 @@ function createAdminModalUI(): void {
         const val = parseFloat((e.target as HTMLInputElement).value);
         S.setAdminPaddleSpeedScale(val);
         document.getElementById('label-paddle-speed')!.textContent = `${val.toFixed(1)}x`;
+    });
+
+    document.getElementById('input-score-multiplier')?.addEventListener('change', (e) => {
+        const val = parseFloat((e.target as HTMLInputElement).value);
+        if (!isNaN(val) && val >= 0) {
+            S.setAdminScoreMultiplier(val);
+        } else {
+            // 잘못된 값 입력 시 기본값으로 리셋
+            S.setAdminScoreMultiplier(1.0);
+            (e.target as HTMLInputElement).value = "1.0";
+        }
     });
 
     // 글로벌 함수 등록 (아이템 즉시 소환용)

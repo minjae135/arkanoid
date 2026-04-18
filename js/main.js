@@ -114,7 +114,10 @@ function update(dt) {
             M.applyItem(it.type);
             playSound('item');
             S.setShakeAmount(4);
-            S.setScore(S.score + C.SCORING.ITEM_CATCH);
+            let itemScore = C.SCORING.ITEM_CATCH;
+            if (S.adminRank >= 2 && S.adminScoreMultiplier !== 1.0)
+                itemScore *= S.adminScoreMultiplier;
+            S.setScore(S.score + itemScore);
             S.items.splice(i, 1);
             continue;
         }
@@ -153,7 +156,12 @@ function update(dt) {
             P.reflectBallFromPaddle(b);
             playSound('bounce');
             S.setShakeAmount(1.5);
-            S.setScore(S.score + C.SCORING.PADDLE_BOUNCE);
+            // 패들 보너스 점수 및 콤보 유지
+            let paddleBonus = C.SCORING.PADDLE_BOUNCE;
+            if (S.adminRank >= 2 && S.adminScoreMultiplier !== 1.0) {
+                paddleBonus *= S.adminScoreMultiplier;
+            }
+            S.setScore(S.score + paddleBonus);
             if (S.combo > 0)
                 S.setComboTimer(C.SCORING.COMBO_WINDOW);
         }

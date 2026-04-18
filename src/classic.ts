@@ -1,4 +1,4 @@
-// src/main.ts
+// src/classic.ts
 import * as C from './constants.js';
 import * as S from './state.js';
 import * as D from './draw.js';
@@ -75,10 +75,11 @@ function update(dt: number): void {
     const moveLeft = I.keys.has('ArrowLeft') || I.keys.has('KeyA');
     const moveRight = I.keys.has('ArrowRight') || I.keys.has('KeyD');
     let targetX = S.paddle.x;
+    const paddleSpeed = S.paddle.speed * S.adminPaddleSpeedScale; // 관리자 속도 배율 적용
     if (moveLeft && !moveRight) {
-        targetX = S.paddle.x - S.paddle.speed * dt;
+        targetX = S.paddle.x - paddleSpeed * dt;
     } else if (moveRight && !moveLeft) {
-        targetX = S.paddle.x + S.paddle.speed * dt;
+        targetX = S.paddle.x + paddleSpeed * dt;
     } else if (!I.mouseSnapLock) {
         targetX = I.mouseX - S.paddle.width / 2;
     }
@@ -117,7 +118,9 @@ function update(dt: number): void {
             M.applyItem(it.type);
             playSound('item');
             S.setShakeAmount(4);
-            S.setScore(S.score + C.SCORING.ITEM_CATCH);
+            let itemScore = C.SCORING.ITEM_CATCH;
+            if (S.adminRank >= 2 && S.adminScoreMultiplier !== 1.0) itemScore *= S.adminScoreMultiplier;
+            S.setScore(S.score + itemScore);
             S.items.splice(i, 1);
             continue;
         }
@@ -151,7 +154,13 @@ function update(dt: number): void {
             P.reflectBallFromPaddle(b);
             playSound('bounce');
             S.setShakeAmount(1.5);
-            S.setScore(S.score + C.SCORING.PADDLE_BOUNCE);
+            
+            // 패들 보너스 점수 및 콤보 유지
+            let paddleBonus = C.SCORING.PADDLE_BOUNCE;
+            if (S.adminRank >= 2 && S.adminScoreMultiplier !== 1.0) {
+                paddleBonus *= S.adminScoreMultiplier;
+            }
+            S.setScore(S.score + paddleBonus);
             if (S.combo > 0) S.setComboTimer(C.SCORING.COMBO_WINDOW);
         }
 
@@ -197,6 +206,12 @@ function update(dt: number): void {
     }
 
     if (S.balls.length === 0) {
+        // 관리자 무적 모드 체크
+        if (S.adminRank >= 1 && S.godMode) {
+            M.resetBalls(true);
+            return;
+        }
+
         S.setLives(S.lives - 1);
         S.setShakeAmount(10);
         if (S.lives <= 0) {

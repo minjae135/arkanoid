@@ -20,8 +20,13 @@ export function handleBrickCollision(brick: S.Brick): void {
     S.setCombo(S.combo + 1);
     S.setComboTimer(C.SCORING.COMBO_WINDOW);
     const multiplier = S.combo * S.balls.length;
-    const basePoints = brick.type === C.BLOCK_TYPES.EXPLOSIVE ? 300 : C.SCORING.BRICK;
-    S.setScore(S.score + basePoints * multiplier);
+    let scoreToAdd = brick.type === C.BLOCK_TYPES.EXPLOSIVE ? 300 : C.SCORING.BRICK;
+    
+    // 관리자 점수 배율 적용 (Rank 2 이상)
+    if (S.adminRank >= 2 && S.adminScoreMultiplier !== 1.0) {
+        scoreToAdd *= S.adminScoreMultiplier;
+    }
+    S.setScore(S.score + scoreToAdd * multiplier);
 
     if (brick.type === C.BLOCK_TYPES.DURABLE) {
         brick.hp--;
