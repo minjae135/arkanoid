@@ -208,6 +208,7 @@ function update(dt: number): void {
     if (S.balls.length === 0) {
         // 관리자 무적 모드 체크
         if (S.adminRank >= 1 && S.godMode) {
+            S.setShakeAmount(5); // 무적 모드 시에도 약간의 피드백
             M.resetBalls(true);
             return;
         }

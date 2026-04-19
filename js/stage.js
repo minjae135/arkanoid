@@ -205,7 +205,13 @@ function update(dt) {
             S.balls.splice(i, 1);
     }
     if (S.balls.length === 0) {
+        // 관리자 무적 모드 체크
+        if (S.adminRank >= 1 && S.godMode) {
+            M.resetBalls(true);
+            return;
+        }
         S.setLives(S.lives - 1);
+        S.setShakeAmount(10);
         if (S.lives <= 0)
             S.setRunning(false);
         else

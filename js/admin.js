@@ -197,6 +197,30 @@ function updateAdminUIByRank() {
     const label = document.getElementById('admin-rank-label');
     if (label)
         label.textContent = `LV.${rank}`;
+    // UI 상태 동기화
+    const checkGodMode = document.getElementById('check-god-mode');
+    if (checkGodMode)
+        checkGodMode.checked = S.godMode;
+    const rangeDropRate = document.getElementById('range-drop-rate');
+    const labelDropRate = document.getElementById('label-drop-rate');
+    if (rangeDropRate) {
+        rangeDropRate.value = String(S.adminDropRate);
+        if (labelDropRate)
+            labelDropRate.textContent = S.adminDropRate === -1 ? "기본" : `${Math.round(S.adminDropRate * 100)}%`;
+    }
+    const rangePaddleSpeed = document.getElementById('range-paddle-speed');
+    const labelPaddleSpeed = document.getElementById('label-paddle-speed');
+    if (rangePaddleSpeed) {
+        rangePaddleSpeed.value = String(S.adminPaddleSpeedScale);
+        if (labelPaddleSpeed)
+            labelPaddleSpeed.textContent = `${S.adminPaddleSpeedScale.toFixed(1)}x`;
+    }
+    const inputScoreMultiplier = document.getElementById('input-score-multiplier');
+    if (inputScoreMultiplier)
+        inputScoreMultiplier.value = String(S.adminScoreMultiplier);
+    const inputMaxBalls = document.getElementById('input-max-balls');
+    if (inputMaxBalls)
+        inputMaxBalls.value = String(S.adminMaxBallCount === -1 ? S.maxBallCount : S.adminMaxBallCount);
     // 권한에 따른 요소 가리기
     const rows = document.querySelectorAll('.admin-row');
     rows.forEach(row => {
