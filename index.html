@@ -29,8 +29,23 @@
         </nav>
 
         <footer class="menu-footer">
-            <p>&copy; 2026 Arkanoid Evolution Project</p>
+            <p>&copy; 2026 Arkanoid Evolution Project | <a href="#" id="view-updates" style="color: inherit; text-decoration: none;">v1.1.1-hotfix-1</a></p>
         </footer>
     </div>
+
+    <!-- 업데이트 내역 모달 -->
+    <div id="updates-backdrop" class="modal-backdrop" hidden>
+        <div class="modal help-panel" style="border-color: var(--neon-cyan); box-shadow: 0 0 30px rgba(0, 243, 255, 0.2); max-width: 500px;">
+            <h2 style="color: var(--neon-cyan);">업데이트 내역</h2>
+            <div id="updates-list" style="max-height: 400px; overflow-y: auto; padding-right: 10px; display: flex; flex-direction: column; gap: 20px;">
+                <!-- 내용이 여기에 동적으로 삽입됩니다 -->
+            </div>
+            <div class="modal-actions">
+                <button id="updates-close" class="secondary" type="button">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/menu.js"></script>
 </body>
 </html>
