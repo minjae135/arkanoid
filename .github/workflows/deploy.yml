@@ -29,7 +29,6 @@ jobs:
 
       - name: Generate secrets
         run: |
-          echo '${{ secrets.ADMIN_KEYS_JSON }}' > admin_keys.json
           npm run prebuild
 
       - name: Build
