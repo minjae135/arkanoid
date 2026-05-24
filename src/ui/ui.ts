@@ -1,6 +1,6 @@
 // src/ui.ts
-import * as S from './state.js';
-import * as C from './constants.js';
+import * as S from '../core/state.js';
+import * as C from '../core/constants.js';
 
 let canvas: HTMLCanvasElement | null = null;
 let resetGameCallback: () => void;

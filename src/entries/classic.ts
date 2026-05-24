@@ -1,13 +1,13 @@
 // src/classic.ts
-import * as C from './constants.js';
-import * as S from './state.js';
-import * as D from './draw.js';
-import * as U from './utils.js';
-import { initUI } from './ui.js';
-import { initAudio, playSound } from './sound.js';
-import * as I from './input.js';
-import * as M from './manager.js';
-import * as P from './physics.js';
+import * as C from '../core/constants.js';
+import * as S from '../core/state.js';
+import * as D from '../core/draw.js';
+import * as U from '../core/utils.js';
+import { initUI } from '../ui/ui.js';
+import { initAudio, playSound } from '../core/sound.js';
+import * as I from '../core/input.js';
+import * as M from '../game/manager.js';
+import * as P from '../core/physics.js';
 
 // --- 초기화 ---
 const canvas = document.getElementById('game') as HTMLCanvasElement;

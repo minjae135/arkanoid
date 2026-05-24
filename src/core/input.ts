@@ -1,6 +1,6 @@
 // src/input.ts
 import * as C from './constants.js';
-import { handleScoreClick } from './admin.js';
+import { handleScoreClick } from '../admin/admin.js';
 
 export let keys = new Set<string>();
 export let mouseX = C.WIDTH / 2;

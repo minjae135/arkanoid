@@ -1,26 +1,27 @@
-import { UPDATES } from './updates.js';
+import { UPDATES } from '../game/updates.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const viewUpdates = document.getElementById('view-updates');
     const updatesBackdrop = document.getElementById('updates-backdrop');
     const updatesClose = document.getElementById('updates-close');
     const updatesList = document.getElementById('updates-list');
+
     viewUpdates?.addEventListener('click', (e) => {
         e.preventDefault();
         renderUpdates();
-        if (updatesBackdrop)
-            updatesBackdrop.hidden = false;
+        if (updatesBackdrop) updatesBackdrop.hidden = false;
     });
+
     updatesClose?.addEventListener('click', () => {
-        if (updatesBackdrop)
-            updatesBackdrop.hidden = true;
+        if (updatesBackdrop) updatesBackdrop.hidden = true;
     });
+
     updatesBackdrop?.addEventListener('click', (e) => {
-        if (e.target === updatesBackdrop)
-            updatesBackdrop.hidden = true;
+        if (e.target === updatesBackdrop) updatesBackdrop.hidden = true;
     });
+
     function renderUpdates() {
-        if (!updatesList)
-            return;
+        if (!updatesList) return;
         updatesList.innerHTML = UPDATES.map(upd => `
             <div class="update-entry">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; border-bottom: 1px solid rgba(0, 243, 255, 0.3); padding-bottom: 4px;">
@@ -34,4 +35,3 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 });
-//# sourceMappingURL=menu.js.map

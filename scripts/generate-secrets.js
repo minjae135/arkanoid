@@ -3,7 +3,7 @@ import fs from 'fs';
 import crypto from 'crypto';
 
 const keysPath = './admin_keys.json';
-const outputPath = './src/admin-secrets.ts';
+const outputPath = './src/admin/admin-secrets.ts';
 
 function hash(text) {
     return crypto.createHash('sha256').update(text).digest('hex');

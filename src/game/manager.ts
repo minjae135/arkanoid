@@ -1,7 +1,7 @@
 // src/manager.ts
-import * as C from './constants.js';
-import * as S from './state.js';
-import * as U from './utils.js';
+import * as C from '../core/constants.js';
+import * as S from '../core/state.js';
+import * as U from '../core/utils.js';
 
 export function buildLevel(): void {
     const newBricks: S.Brick[] = [];

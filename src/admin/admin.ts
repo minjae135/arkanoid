@@ -1,8 +1,8 @@
 // src/admin.ts
-import * as S from './state.js';
-import * as C from './constants.js';
-import * as M from './manager.js';
-import { syncSlidersWithState } from './ui.js';
+import * as S from '../core/state.js';
+import * as C from '../core/constants.js';
+import * as M from '../game/manager.js';
+import { syncSlidersWithState } from '../ui/ui.js';
 import { ADMIN_HASHES } from './admin-secrets.js';
 
 let scoreClickCount = 0;

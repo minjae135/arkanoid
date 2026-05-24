@@ -4,10 +4,15 @@
   "type": "module",
   "scripts": {
     "prebuild": "node scripts/generate-secrets.js",
-    "build": "tsc",
+    "dev": "npm run prebuild && vite",
+    "build": "npm run prebuild && vite build",
+    "preview": "vite preview",
     "watch": "tsc -w"
   },
   "devDependencies": {
-    "typescript": "^6.0.2"
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.14",
+    "vite-plugin-checker": "^0.13.0"
   }
 }

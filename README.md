@@ -31,11 +31,34 @@
 - **공 발사 / 일시정지 해제**: 화면 터치 (탭)
 - **재시작**: 하단 '다시 시작' 버튼 클릭 또는 게임 종료 후 화면 터치
 
-## 🛠 기술 스택
-- **Language**: TypeScript (ESNext Modules)
-- **Graphics**: HTML5 Canvas API
-- **Audio**: Web Audio API (Dynamic SFX)
-- **Style**: CSS3 (Cyber-Neon Theme, Responsive Design)
+## 🛠 개발 및 빌드
+이 프로젝트는 **Vite**와 **TypeScript**를 기반으로 구축되었습니다.
+
+### 설치 및 실행
+```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행 (Hot Module Replacement 지원)
+npm run dev
+
+# 프로덕션 빌드 (dist/ 폴더에 생성)
+npm run build
+
+# 빌드 결과물 미리보기
+npm run preview
+```
+
+### 프로젝트 구조
+- `src/core/`: 핵심 로직 (상수, 상태 관리, 물리 엔진, 드로잉, 사운드 등)
+- `src/game/`: 게임 진행 관련 (매니저, 레벨 데이터, 업데이트 내역)
+- `src/ui/`: UI 구성 요소 및 메뉴 로직
+- `src/admin/`: 관리자 기능 및 보안 설정
+- `src/entries/`: 각 게임 모드별 진입점 (classic, infinite, stage, main)
+
+## 🌐 배포
+GitHub Actions를 통해 `main` 브랜치 푸시 시 자동으로 GitHub Pages에 배포됩니다.
+URL: `https://<username>.github.io/arkanoid/`
 
 ---
 *Classic mechanics meets modern progression.*

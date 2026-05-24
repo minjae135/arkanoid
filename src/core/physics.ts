@@ -2,8 +2,9 @@
 import * as C from './constants.js';
 import * as S from './state.js';
 import { playSound } from './sound.js';
-import { spawnItemAt } from './manager.js';
-export function reflectBallFromPaddle(b) {
+import { spawnItemAt } from '../game/manager.js';
+
+export function reflectBallFromPaddle(b: S.Ball): void {
     const hitPos = (b.x - (S.paddle.x + S.paddle.width / 2)) / (S.paddle.width / 2);
     const maxBounce = Math.PI / 3;
     const angle = hitPos * maxBounce;
@@ -11,19 +12,22 @@ export function reflectBallFromPaddle(b) {
     b.vx = Math.sin(angle) * speed;
     b.vy = -Math.cos(angle) * speed;
 }
-export function handleBrickCollision(brick) {
-    if (!brick.alive)
-        return;
+
+export function handleBrickCollision(brick: S.Brick): void {
+    if (!brick.alive) return;
+
     // 콤보 및 점수 계산
     S.setCombo(S.combo + 1);
     S.setComboTimer(C.SCORING.COMBO_WINDOW);
     const multiplier = S.combo * S.balls.length;
     let scoreToAdd = brick.type === C.BLOCK_TYPES.EXPLOSIVE ? 300 : C.SCORING.BRICK;
+    
     // 관리자 점수 배율 적용 (Rank 2 이상)
     if (S.adminRank >= 2 && S.adminScoreMultiplier !== 1.0) {
         scoreToAdd *= S.adminScoreMultiplier;
     }
     S.setScore(S.score + scoreToAdd * multiplier);
+
     if (brick.type === C.BLOCK_TYPES.DURABLE) {
         brick.hp--;
         playSound('bounce');
@@ -32,22 +36,26 @@ export function handleBrickCollision(brick) {
             return;
         }
     }
+
     if (brick.type === C.BLOCK_TYPES.EXPLOSIVE) {
         brick.alive = false;
         playSound('break');
         S.setShakeAmount(12); // 폭발만 강하게
-        const neighbors = S.bricks.filter(other => other.alive &&
+
+        const neighbors = S.bricks.filter(other =>
+            other.alive &&
             other !== brick &&
             Math.abs(other.x - brick.x) < brick.w * 1.6 &&
-            Math.abs(other.y - brick.y) < brick.h * 1.6);
+            Math.abs(other.y - brick.y) < brick.h * 1.6
+        );
         for (const neighbor of neighbors) {
             handleBrickCollision(neighbor);
         }
         return;
     }
+
     brick.alive = false;
     spawnItemAt(brick);
     playSound('break');
     S.setShakeAmount(0); // 일반 블록은 흔들림 제거
 }
-//# sourceMappingURL=physics.js.map
